@@ -1,52 +1,53 @@
 import React, { useEffect,useState } from 'react';
 import { View, Text, FlatList, StyleSheet,  } from 'react-native';
-import EventCard from '../../components/EventCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ApiServiceGet } from '../../globalFunctions/apiService';
 import IndicatorModal from '../../components/IndicatorModal';
 import { useDispatch, useSelector } from 'react-redux';
 import {styles} from '../Favourites/FavouritesStyle';
-const EventScreen = () => {
-    const [events, setEvents] = useState<any>([]);
+import ProductCard from '../../components/ProductCard';
+import EmptyList from '../../globalFunctions/EmptyList';
+const ProductScreen = () => {
+    const [products, setProducts] = useState<any>([]);
           const [isAnimate, setAnimate] = useState(false);
-      const username = useSelector(state => state.user.username);
     
 
-const getEvents = async () => {
+const getProducts = async () => {
    
     setAnimate(true);
-    let api_url = 'events-listing' ;
+    let api_url = 'products' ;
     const data1 = await ApiServiceGet(api_url);
     console.log(data1,'data---');
-    if(data1.success){
-      setEvents(data1.data.events);
+    if(data1){
+      setProducts(data1);
     }
     setAnimate(false)
 
     
   };
 useEffect(()=>{
-getEvents();
+getProducts();
 },[])
   return (
     <SafeAreaView style={styles.container}>
     <IndicatorModal isLoading={isAnimate} />
-       <View style={styles.header}>
-        <Text style={styles.hello}>Hello {username}!</Text>
-        <Text style={styles.subText}>Are you ready to dance?</Text>
+       
+ <View style={styles.header}>
+        <Text style={styles.hello}>Hello !</Text>
       </View>
-
       <FlatList
-        data={events}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <EventCard item={item} />}
+      horizontal
+        data={products}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({ item }) => <ProductCard item={item} />}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={<EmptyList />}
       />
     </SafeAreaView>
   );
 };
 
-export default EventScreen;
+export default ProductScreen;
 
 

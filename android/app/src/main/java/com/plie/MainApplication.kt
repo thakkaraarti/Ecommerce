@@ -1,4 +1,4 @@
-package com.plie
+package com.ECommerce
 
 import android.app.Application
 import com.facebook.react.PackageList

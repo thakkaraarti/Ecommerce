@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import EventScreen from '../screens/Events/EventScreen';
+import ProductScreen from '../screens/Product/ProductScreen';
 import Favourites from '../screens/Favourites/Favourites';
-import ProfileScreen from '../screens/Profile/ProfileScreen';
-import SearchScreen from '../screens/Search/SearchScreen';
-import SearchIcon from '../assets/svg/search.svg';
+import CartScreen from '../screens/Cart/CartScreen';
+
 import Eventicon from '../assets/svg/Calendar.svg';
 import FavouritesIcon from '../assets/svg/heart.svg';
 import ProfileIcon from '../assets/svg/user.svg';
@@ -15,40 +14,16 @@ const BottomTabs = () => {
                 headerShown: false,
                 tabBarHideOnKeyboard: true,
             })}
-        //  initialRouteName={sharedInstance.getMessage != null&&sharedInstance.getMessage != '' ? CHAT_TAB : KEYPAD}
-        // tabBar={props => <CustomTabBar {...props} />}
+        
         >
-            <Tab.Screen
-                name={'Search'}
-                component={SearchScreen}
-                // initialParams={{ nav: nav1 }}
-                options={({ route }) => ({
-                    headerShown: false,
-                    tabBarLabel: 'Search',
-                    tabBarIcon: ({ focused }) => {
-                        return (
-                            <SearchIcon
-                                width={24}
-                                height={24}
-                                color={focused ? '#4CAF50' : '#999'}
-                            />
-                        );
-                    },
-                    tabBarStyle: {
-                        // display: getTabBarVisibility(route),
-                        borderColor: 'lightgrey',
-                        //  borderTopWidth: theme === 'light' ? 0.2 : 0,
-                    },
-                })}
-            />
+            
 
             <Tab.Screen
-                name={'Events'}
-                component={EventScreen}
-                //initialParams={{ nav: nav1 }}
+                name={'Products'}
+                component={ProductScreen}
                 options={({ route }) => ({
                     headerShown: false,
-                    tabBarLabel: 'Events',
+                    tabBarLabel: 'Products',
                      tabBarIcon: ({ focused }) => {
                         return (
                             <Eventicon
@@ -59,16 +34,13 @@ const BottomTabs = () => {
                         );
                     },
                     tabBarStyle: {
-                        // display: getTabBarVisibility(route),
                         borderColor: 'lightgrey',
-                        //  borderTopWidth: theme === 'light' ? 0.2 : 0,
                     },
                 })}
             />
             <Tab.Screen
                 name={'Favourites'}
                 component={Favourites}
-                // initialParams={{ nav: nav1 }}
                 options={({ route }) => ({
                     headerShown: false,
                     tabBarLabel: 'Favourites',
@@ -82,19 +54,16 @@ const BottomTabs = () => {
                         );
                     },
                     tabBarStyle: {
-                        // display: getTabBarVisibility(route),
                         borderColor: 'lightgrey',
-                        //  borderTopWidth: theme === 'light' ? 0.2 : 0,
                     },
                 })}
             />
             <Tab.Screen
-                name={'Profile'}
-                component={ProfileScreen}
-                // initialParams={{ nav: nav1 }}
+                name={'Cart'}
+                component={CartScreen}
                 options={({ route }) => ({
                     headerShown: false,
-                    tabBarLabel: 'Profile',
+                    tabBarLabel: 'Cart',
                      tabBarIcon: ({ focused }) => {
                         return (
                             <ProfileIcon
@@ -105,17 +74,10 @@ const BottomTabs = () => {
                         );
                     },
                     tabBarStyle: {
-                        // display: getTabBarVisibility(route),
                         borderColor: 'lightgrey',
-                        //  borderTopWidth: theme === 'light' ? 0.2 : 0,
                     },
                 })}
             />
-
-
-
-
-
 
 
         </Tab.Navigator>

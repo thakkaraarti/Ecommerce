@@ -1,15 +1,16 @@
 import React, { useEffect,useState } from 'react';
 import { View, Text, FlatList, StyleSheet,  } from 'react-native';
+import ProductCard from '../../components/ProductCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ApiServiceGet } from '../../globalFunctions/apiService';
 import { useDispatch, useSelector } from 'react-redux';
 import {styles} from '../Favourites/FavouritesStyle';
-import ProductCard from '../../components/ProductCard';
 import EmptyList from '../../globalFunctions/EmptyList';
-const Favourites = () => {
+const CartScreen = () => {
+    const [events, setEvents] = useState<any>([]);
     const dispatch = useDispatch();
     
-      const favourites = useSelector(state => state.user.favourites);
+      const cart = useSelector(state => state.user.cartItems);
     
 
   return (
@@ -21,9 +22,9 @@ const Favourites = () => {
 
       {/* List */}
       <FlatList
-        data={favourites}
+        data={cart}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <ProductCard item={item} />}
+        renderItem={({ item }) => <ProductCard item={item.product} />}
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={<EmptyList />}
@@ -32,6 +33,6 @@ const Favourites = () => {
   );
 };
 
-export default Favourites;
+export default CartScreen;
 
 

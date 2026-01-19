@@ -1,47 +1,95 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: '',
-  username: '',
   favourites: [],
+   cartItems: [],
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
-    },
-    setUsername: (state, action) => {
-      state.username = action.payload;
-    },
-    toggleFavourite: (state, action) => {
-      const event = action.payload;
+    
+    
+     toggleFavourite: (state, action) => {
+      const item = action.payload;
 
-      const index = state.favourites.findIndex(
-        item => item.event_id === event.event_id
+      const exists = state.favourites.find(
+        (fav: any) => fav.id === item.id
       );
 
-      if (index === -1) {
-        // ➕ Add to favourites
-        state.favourites.push(event);
+      if (exists) {
+        // remove
+        state.favourites = state.favourites.filter(
+          (fav: any) => fav.id !== item.id
+        );
       } else {
-        // ➖ Remove from favourites
-        state.favourites.splice(index, 1);
+        // add
+        state.favourites.push(item);
       }
     },
    
-    resetUserCredentials: state => {
-      state.username = '';
-      
+    addToCart: (state, action) => {
+      const product = action.payload;
+
+      const existingItem = state.cartItems.find(
+        (item: any) => item.product.id === product.id
+      );
+
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        state.cartItems.push({
+          product,
+          quantity: 1,
+        });
+      }
+    },
+
+    increaseQuantity: (state, action) => {
+      const productId = action.payload;
+      const item = state.cartItems.find(
+        (item: any) => item.product.id === productId
+      );
+      if (item) item.quantity += 1;
+    },
+
+    decreaseQuantity: (state, action) => {
+      const productId = action.payload;
+      const item = state.cartItems.find(
+        (item: any) => item.product.id === productId
+      );
+
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        } else {
+          state.cartItems = state.cartItems.filter(
+            (item: any) => item.product.id !== productId
+          );
+        }
+      }
+    },
+
+    removeFromCart: (state, action) => {
+      const productId = action.payload;
+      state.cartItems = state.cartItems.filter(
+        (item: any) => item.product.id !== productId
+      );
+    },
+
+    clearCart: (state) => {
+      state.cartItems = [];
     },
   },
 });
 
 export const {
- setToken,
  toggleFavourite,
- setUsername
+ addToCart,
+  increaseQuantity,
+  decreaseQuantity,
+  removeFromCart,
+  clearCart,
 } = userSlice.actions;
 export default userSlice.reducer;
